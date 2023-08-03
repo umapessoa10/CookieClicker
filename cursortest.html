@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            cursor: none;
+        }
+
+        #cursor {
+            width: 16px;
+            height: 16px;
+            background-image: url(images/cursor.png);
+            background-repeat: no-repeat;
+            transform: scale(1.3);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    oi
+    <div id="cursor"></div>
+
+    <script>
+        const cursor = document.getElementById('cursor'); // Remove the dot (.) before 'cursor'
+
+        const moveCursor = (e) => {
+            const mouseY = e.clientY;
+            const mouseX = e.clientX;
+
+            // Update the CSS transform property correctly
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        }
+
+        window.addEventListener('mousemove', moveCursor);
+    </script>
+</body>
+</html>

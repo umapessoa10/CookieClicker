@@ -1,0 +1,673 @@
+<html>
+    <head>
+        <title>Cookie Clicker</title>
+        <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+        <style>
+            body {
+                background-color: chocolate;
+            }
+
+            .cookie-container::before {
+                content: ""; /* Pseudo-element content property is required for ::before */
+                background-image: url(images/shadow.png);
+                position: absolute;
+                top: 1%;
+                left: 0.5%;
+                width: 32.7%;
+                height: 98%;
+                pointer-events: none; /* Prevent the pseudo-element from blocking mouse events */
+                background-size: 100% 100%; /* Stretch the background image to cover the container */
+                z-index: 192391823; /* Move the pseudo-element behind the content of .cookie-container */
+                opacity: 0.7;
+            }
+
+            .ger-container::before {
+                content: ""; /* Pseudo-element content property is required for ::before */
+                background-image: url(images/shadow.png);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none; /* Prevent the pseudo-element from blocking mouse events */
+                background-size: 100% 100%; /* Stretch the background image to cover the container */
+                z-index: 192391823; /* Move the pseudo-element behind the content of .cookie-container */
+                opacity: 0.5;
+            }
+
+
+            * {
+                font-family: CookieFont;
+                font-weight: bold;
+            }
+
+            /** {
+                cursor: none;
+            }*/
+
+            @font-face { font-family: CookieFont; src: url('font/cookiefont.ttf'); } 
+
+            .cookie-img {
+                cursor: pointer;
+                transition: 0.3s ease;
+                user-select: none;
+                
+                display: block;
+                max-width: 400px;
+                max-height: 400px;
+                width: auto;
+                height: auto;
+                
+            }
+
+            .cookie-img:hover {
+                transform: scale(1.2);
+            }
+
+            .cookie-container {
+                grid-column-start: 1;
+                grid-column-end: 1;
+                width: 100%;
+                background-color: red;
+                display: grid;
+                grid-template-rows: 20% 80%;
+                overflow: hidden;
+                background-image: url(images/bg.jpg);
+            }
+
+            .middle-container {
+                grid-column-start: 2;
+                grid-column-end: 2;
+                width: 100%;
+                background-color: lightgreen;
+            }
+
+            .shop-container {
+                grid-column-start: 3;
+                grid-column-end: 3;
+                width: 100%;
+                background-color: blue;
+                overflow-y: scroll;
+            }
+
+            .ger-container {
+                display: grid;
+                width: 100%;
+                height: 100%;
+                background-color: yellow;
+                grid-template-columns: 33% 42% 25%;
+                
+            }
+
+            .cookie {
+                margin-top: 20px;
+                width: 80%;
+                background-color: white;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                max-height: 45%;
+            }
+
+            #name {
+                position: absolute;
+                top: 20px;
+                border-radius: 20px;
+                padding: 5px;
+                background-color: darkblue;
+                color: white;
+                ;
+            }
+
+            .upper {
+                grid-column: 1;
+                position: absolute;
+                top: 50px;
+                width: 33%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                
+                overflow: hidden;
+                margin-top: 10px;
+            }
+
+            .upper-opacity {
+                background-color: black;
+                opacity: 0.5;
+                margin-top: 50px;
+                width: 100%;
+                grid-column: 1; 
+                
+            }
+            
+
+            #cps-display {
+                position: absolute;
+                top: 10%;
+            }
+
+            .down {
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                
+            }
+
+            #darken-container {
+                display: none;
+                width: 120%;
+                height: 120%;
+                background-color: black;
+                opacity: 0.5;
+                z-index: 999;
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+
+            #change-bakery-name {
+                display: none;
+                position: absolute;
+                top: 20%;
+                left: 35%;
+                width: 30%;
+                height: 50%;
+                background-color: blue;
+                z-index: 1000;
+                opacity: 1;
+                align-items: center;
+                justify-content: center;
+                opacity: 1.0;
+            }
+
+            #plus1 {
+                display: none;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                font-weight: bold;
+                color: white;
+                user-select: none;
+            }
+
+            .shop-item {
+                width: 100%;
+                background-color: green;
+                cursor: pointer;
+                height: 13%;
+                display: flex;
+                user-select: none;
+            }
+
+            .shop-item.nobuy {
+                background-color: red;
+                cursor: auto;
+            }
+
+            .icon {
+                width: 10%;
+                height: auto;
+                margin: 15px;
+            }
+
+            .content {
+                padding: 15px;
+                padding-top: 10px;
+            }
+
+            .content .title {
+                font-weight: bold;
+                font-size: 25px;
+            }
+
+            .cps-added {
+                display: none;
+            }
+
+            .upgrades-container {
+                width: 100%;
+                background-color: green;
+                border-top: 3px solid chocolate; border-bottom: 3px solid chocolate;
+                display: grid;
+                grid-template-columns: 20% 20% 20% 20% 20%;
+                overflow: hidden;
+                overflow-y: scroll;
+                height: 25%;
+            }
+
+
+            .upgrades-container::-webkit-scrollbar {
+                display: none;
+            }
+
+            .upgrades-container {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
+            }
+
+            .upgrade {
+                border: 3px solid chocolate;
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+
+            .upgrade img {
+                /* Center the image within the square */
+                width: 100%;
+                height: 100%;
+                
+                /*transform: translate(-50%, -50%);*/
+            }
+
+            #cookies-display {
+                color: white;
+                font-size: 25px;
+                top: 5px;
+            }
+
+            #cookies-display::before {
+                content: "Cookies";
+                color: white;
+                font-weight: bolder;
+                position: relative;
+                left: 55%;
+                font-size: 20px;
+                top: 20px;
+            }
+
+            #cps-display {
+                color: white;
+                position: absolute;
+                left: 2%;
+            }
+
+            #cps-display::before {
+                content: 'Per Second: ';
+                transform: translate(-170px, -16px);
+            }
+
+            .upgrade-stats {
+                display: none;
+            }
+
+            .upgrade-price {
+                position: relative;
+                left: -60%;
+                width: 0;
+            }
+
+            .upgrade.bought {
+                border: 3px solid green;
+                cursor: default;
+            }
+
+            .upgrade.nomoney {
+                border: 3px solid red;
+            }
+
+
+            
+
+
+
+            /*#cursor {
+                width: 16px;
+                height: 16px;
+                background-image: url(images/cursor.png);
+                background-repeat: no-repeat;
+                transform: scale(2);
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1208312903801293812938192083091283091283;
+                user-select: none;
+            }*/
+        </style>
+    </head>
+    <body>
+        <div class="ger-container">
+        <div class="cookie-container">
+            <span onclick="changeBakeryName()" id="name">New Player's Bakery</span>
+            <div class="upper-opacity">
+
+            </div>
+            <div class="upper">
+                <p id="cookies-display">0</p>
+                <p id="cps-display">0</p>
+            </div>
+            <div class="down">
+            <div class="cookie">
+                <!--<div id="cursor"></div>-->
+                <img draggable="false" src="images/cookie.png" class="cookie-img" id="cookieImage" onclick="clicked(event)">
+            </div>
+            <span id="plus1">+1</span>
+            </div>
+        </div>
+        <div class="middle-container">
+            <div class="menu">
+            <button class="menu-btn" onclick="setContent('about')">About</button>
+            </div>
+            <div class="iframe">
+                <iframe src="menu/about.html" frameborder="0"></iframe>
+            </div>
+        </div>
+        <div class="shop-container">
+            <h1>Store</h1>
+            <div class="upgrades-container">
+                <div class="upgrade" onclick="elementBuy(this)">
+                    <img src="images/shop/placeholder.png">
+                    <span class="upgrade-stats">cpc 2</span> <!-- cpc is*2 -->
+                    <span class="upgrade-price">20</span>
+                </div>
+                <div class="upgrade"  onclick="elementBuy(this)">
+                    <img src="images/shop/placeholder.png">
+                    <span class="upgrade-stats">addmul 0.05</span> <!-- cpc is*2 -->
+                    <span class="upgrade-price">50</span>
+                </div>
+            </div>
+
+            <div class="shop-item" id="cursor-shop" onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Cursor</span><br>
+                    <span class="price">15</span>
+                    <span class="cps-added">0.2</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="cursor-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Grandma</span><br>
+                    <span class="price">100</span>
+                    <span class="cps-added">1</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="farm-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Farm</span><br>
+                    <span class="price">1100</span>
+                    <span class="cps-added">8</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="cursor-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Mine</span><br>
+                    <span class="price">12000</span>
+                    <span class="cps-added">47</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="cursor-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Factory</span><br>
+                    <span class="price">130000</span>
+                    <span class="cps-added">260</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="cursor-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">Time Machine</span><br>
+                    <span class="price">1000000</span>
+                    <span class="cps-added">1000</span>
+                </div>
+            </div>
+            <div class="shop-item nobuy" id="cursor-shop"  onclick="buy(this)">
+                <img src="images/shop/placeholder.png" class="icon">
+                <div class="content">
+                    <span class="title">JavaScript Console</span><br>
+                    <span class="price">3000000</span>
+                    <span class="cps-added">2000</span>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <!-- Extras, are not in the main -->
+        
+        <div id="darken-container">
+
+        </div>
+        
+        <center><div id="change-bakery-name">
+            <input type="text" id="changeBakeryNameInput" maxlength="28">
+        </div></center>
+    </body>
+    <script>
+        //Game Vars
+
+        let cookies = 0;
+        let cpc = 1; //Cookies per click
+        let cps = 0; //Cookies per Second
+        
+        let bakeryName = 'New Player';
+
+        let darkenScreenStatus = ''; //dark screen is not on
+        let addmul = 0;
+
+
+        //Element Vars
+
+        const cpscheck = setInterval(cpsCheck, 1000);
+
+        const cookiesDisplay = document.getElementById('cookies-display');
+        const cpsDisplay = document.getElementById('cps-display');
+        const darkenContainer = document.getElementById('darken-container');
+        const changeBakeryNameElement = document.getElementById('change-bakery-name');
+        const changeBakeryNameInput = document.getElementById('changeBakeryNameInput');
+
+
+        function cpsCheck() {
+            
+            if (cps > 0) {
+                cookies += cps
+            }
+            cookies += cookies * addmul;
+
+            Math.round(cookies);
+
+            console.log("Updated cookies: Total: " + cookies + " Cps: " + cps)
+
+            
+
+            cookiesDisplay.innerHTML = Math.round(cookies*10) / 10; //atualize the displayer
+            cpsDisplay.innerHTML = Math.round(cps*10) / 10;
+            updateShopStatus();
+        }
+
+
+        function clicked(event) {
+            cookies += cpc;
+            cookiesDisplay.innerHTML = cookies;
+            cpsDisplay.innerHTML = cps;
+            updateShopStatus();
+            cookiesDisplay.innerHTML = Math.round(cookies*10) / 10;
+            cpsDisplay.innerHTML = Math.round(cps*10) / 10;
+
+            // part where +1 spawns
+            // part where +1 spawns
+            const plus1 = document.getElementById('plus1');
+
+            plus1.innerText = "+" + cpc;
+
+            // Get the mouse's x and y coordinates relative to the document
+            const mouseX = event.clientX + 20;
+            const mouseY = event.clientY;
+
+            // Set the element's x and y position to the mouse's x and y coordinates
+            plus1.style.left = mouseX + 'px';
+            plus1.style.top = mouseY + 'px'; // Move the element slightly above the mouse position
+
+            // Show the "+1" element for a short period (e.g., 1 second) and then hide it
+            plus1.style.display = 'block';
+
+            // Set the transition property for the animation
+            plus1.style.transition = 'top 1s ease';
+
+            
+
+            // Hide the element after 1 second
+            setTimeout(() => {
+                plus1.style.top = mouseY - 40 + 'px';
+                
+            }, 10);
+            setTimeout(() => {
+                    plus1.style.display = 'none'
+            }, 500);
+            
+        }
+
+        function changeBakeryName() {
+            darkenScreenStatus = 'changeBakeryName';
+            darkenContainer.style.display = 'block';
+            changeBakeryNameElement.style.display = 'flex';
+        }
+
+        function closeBakeryName() {
+            if (darkenScreenStatus === 'changeBakeryName') { // Use === for comparison
+                console.log("Screen closed");
+                darkenScreenStatus = '';
+                darkenContainer.style.display = 'none';
+                changeBakeryNameElement.style.display = 'none';
+            }
+        }
+
+        darkenContainer.onclick = closeBakeryName; // Remove parentheses ()
+
+        changeBakeryNameInput.addEventListener("keypress", (event) => {
+            if (event.key == 'Enter') {
+                console.log("enter");
+                updateBakeryName(changeBakeryNameInput.value); // Use .value instead of .innerHTML
+                console.log(changeBakeryNameInput.value); // Use .value instead of .innerText
+                closeBakeryName();
+            }
+        });
+
+
+        function updateBakeryName(name) {
+            let nameElement = document.getElementById('name');
+            bakeryName = name;
+            
+            nameElement.innerText = bakeryName + "'s Bakery";
+
+            changeBakeryNameInput.value = '';
+        }
+
+        function buy(element) {
+            console.log("Called: "+element)
+            let priceElement = element.querySelector('.price');
+            let price = parseInt(priceElement.innerText);
+
+            if (cookies >= price) {
+                cookies -= price;
+                cookiesDisplay.innerHTML = cookies;
+
+                let cpsAddedElement = element.querySelector('.cps-added');
+                let cpsAdded = parseFloat(cpsAddedElement.innerText);
+                cps += cpsAdded;
+                cpsDisplay.innerHTML = cps;
+
+                priceElement.innerText = Math.ceil(price + price / 6); // Increase the price
+            }
+        }
+
+        function updateShopStatus() {
+            let shopItems = document.querySelectorAll('.shop-container .shop-item');
+            let upgrades = document.querySelectorAll('.upgrade');
+            let price;
+            
+            // Check the buildings
+            for (let i = 0; i < shopItems.length; i++) {
+                price = parseInt(shopItems[i].querySelector('.price').innerText);
+                shopItems[i].classList.remove('nobuy'); // Remove the 'nobuy' class from all shop items
+                if (price > cookies) {
+                    shopItems[i].classList.add('nobuy'); // Add the 'nobuy' class to the shop item if not affordable
+                }
+            }
+            
+            // Check the upgrades
+            for (let i = 0; i < upgrades.length; i++) {
+                price = parseInt(upgrades[i].querySelector('.upgrade-price').innerText);
+                if (!upgrades[i].classList.contains('bought')) {
+                upgrades[i].classList.remove('nomoney'); // Remove the 'nomoney' class from all upgrades
+                if (price > cookies) {
+                    upgrades[i].classList.add('nomoney'); // Add the 'nomoney' class to the upgrade if not affordable
+                }
+                }
+            }
+        }
+
+        function elementBuy(element) {
+            //Buying system
+            const price = element.querySelector('.upgrade-price').innerText; //get the price
+            if (cookies >= price && !element.classList.contains('bought')) {
+                cookies -= price;
+                //Change the element's bg(border for placeholder)
+                element.classList.add('bought');
+
+
+                const upgradeStats = element.querySelector('.upgrade-stats').innerText; //getting WHAT TO DO
+                //interpreting system
+                if (upgradeStats.includes("cpc")) {
+                    cpc *= upgradeStats.split(' ')[1];
+                }else if (upgradeStats.includes("addmul")) {
+                    addmul += upgradeStats.split(' ')[1];
+                }
+            }
+
+
+
+            
+
+        }
+
+        function setContent(content) {
+            const iframe = document.querySelector('iframe');
+            iframe.src = 'menu/' + content +'.html';
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //CURSOR PART ISOLATED FROM REST
+
+
+
+
+
+
+
+
+        /*const cursor = document.getElementById('cursor'); // Remove the dot (.) before 'cursor'
+
+        const moveCursor = (e) => {
+            const mouseY = e.clientY;
+            const mouseX = e.clientX;
+
+            // Update the CSS transform property correctly
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+        }
+
+        window.addEventListener('mousemove', moveCursor);
+        moveCursor();*/
+
+
+    </script>
+</html>
